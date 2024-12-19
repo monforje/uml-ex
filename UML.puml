@@ -1,0 +1,92 @@
+@startuml UML
+
+class Client {
+  + email: String
+  + phone: String
+  + address: String
+  + selectProducts()
+  + placeOrder()
+  + makePayment()
+  + trackOrder()
+  + updateProfile()
+}
+
+class Assembler {
+  + id: String
+  + name: String
+  + assignBox()
+  + collectOrder()
+  + updateBoxInfo()
+  + reportIssues()
+  + confirmOrderReady()
+}
+
+class Order {
+  + orderId: String
+  + productList: List<Product>
+  + paymentMethod: PaymentMethod
+  + status: String
+  + deliveryTime: DateTime
+  + calculateTotalPrice()
+  + updateStatus(newStatus: String)
+}
+
+class Courier {
+  + id: String
+  + name: String
+  + startDelivery()
+  + completeDelivery()
+  + confirmReturn()
+  + viewDeliveryRoute()
+  + updateDeliveryStatus()
+}
+
+class PaymentMethod {
+  + type: String // e.g., SBP, Card
+  + validatePayment()
+}
+
+class ManagerApp {
+  + dashboard: String
+  + trackOrders()
+  + manageDarkstore()
+  + generateReports()
+  + updateInventory()
+}
+
+class CustomerApp {
+  + browseProducts()
+  + manageCart()
+  + trackOrder()
+  + leaveFeedback()
+  + contactSupport()
+}
+
+class DarkstoreSystem {
+  + mainScreen: String
+  + assignOrderToAssembler()
+  + notifyCourier()
+  + manageInventory()
+  + trackOrderProgress()
+  + alertIssues()
+}
+
+class Product {
+  + productId: String
+  + name: String
+  + price: Double
+  + stock: Int
+  + updateStock(quantity: Int)
+}
+
+Client -- CustomerApp
+CustomerApp -- Order
+Order -- PaymentMethod
+Order -- Assembler
+Assembler -- DarkstoreSystem
+DarkstoreSystem -- Courier
+Courier -- Client
+ManagerApp -- DarkstoreSystem
+Order -- Product
+
+@enduml
