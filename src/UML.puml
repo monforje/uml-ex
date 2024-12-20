@@ -42,7 +42,6 @@ class Courier {
 abstract class PaymentMethod {
     +paymentMethod: String
     +validatePayment(): Boolean
-    +processRefund(order: Order): void
 }
 
 class CardPayment {
@@ -66,11 +65,9 @@ class Order {
     +paymentMethod: PaymentMethod
     +status: OrderStatus
     +createdAt: Date
-    +updatedAt: Date
     +deliveryTime: Date
     +calculatePrice(): Double
     +updateStatus(status: OrderStatus): void
-    +cancelOrder(): void
 }
 
 class Product {
@@ -85,20 +82,13 @@ class Application {
     +browseProducts(): List<Product>
     +manageCart(cart: List<Product>): void
     +trackOrder(orderID: String): void
-    +register(user: User): void
-    +authenticateUser(email: String, password: String): User
 }
 
 class DarkStoreSystem {
     +inventory: Map<Product, Int>
-    +staffList: List<Assembler | Courier>
     +activeOrders: List<Order>
     +assignOrderToAssembler(order: Order, assembler: Assembler): void
     +notifyCourier(order: Order, courier: Courier): void
-    +manageInventory(): void
-    +trackOrderProgress(order: Order): OrderStatus
-    +generateInventoryReport(): String
-    +handleReturns(order: Order): void
 }
 
 class Administrator {
