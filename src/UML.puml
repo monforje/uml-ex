@@ -1,0 +1,126 @@
+@startuml UML
+abstract class User {
+    +id: String
+    +name: String
+    +email: String
+    +phone: String
+    +login(): void
+    +logout(): void
+    +updateProfile(): void
+}
+
+class Client {
+    +address: String
+    +cart: List<Product>
+    +orderHistory: List<Order>
+    +selectProducts(): void
+    +placeOrder(): Order
+    +makePayment(): void
+    +trackOrder(orderID: String): void
+    +updateAddress(): void
+    +viewOrderHistory(): void
+}
+
+class Assembler {
+    +currentOrders: List<Order>
+    +assignPackage(order: Order): void
+    +collectOrder(order: Order): void
+    +confirmOrderReady(order: Order): void
+    +reportIssue(order: Order, issue: String): void
+}
+
+class Courier {
+    +vehicleType: String
+    +currentLocation: String
+    +currentOrder: Order
+    +startDelivery(order: Order): void
+    +completeDelivery(order: Order): void
+    +updateLocation(location: String): void
+    +cancelDelivery(order: Order): void
+}
+
+abstract class PaymentMethod {
+    +paymentMethod: String
+    +validatePayment(): Boolean
+    +processRefund(order: Order): void
+}
+
+class CardPayment {
+    +cardNum: String
+    +cardDate: String
+    +cardCVV: String
+    +cardHolderName: String
+    +validatePayment(): Boolean
+}
+
+class SBPPayment {
+    +phone: String
+    +bankName: String
+    +transactionID: String
+    +validatePayment(): Boolean
+}
+
+class Order {
+    +orderID: String
+    +productList: List<Product>
+    +paymentMethod: PaymentMethod
+    +status: OrderStatus
+    +createdAt: Date
+    +updatedAt: Date
+    +deliveryTime: Date
+    +calculatePrice(): Double
+    +updateStatus(status: OrderStatus): void
+    +cancelOrder(): void
+}
+
+class Product {
+    +productID: String
+    +name: String
+    +price: Double
+    +description: String
+    +stock: Int
+}
+
+class Application {
+    +browseProducts(): List<Product>
+    +manageCart(cart: List<Product>): void
+    +trackOrder(orderID: String): void
+    +register(user: User): void
+    +authenticateUser(email: String, password: String): User
+}
+
+class DarkStoreSystem {
+    +inventory: Map<Product, Int>
+    +staffList: List<Assembler | Courier>
+    +activeOrders: List<Order>
+    +assignOrderToAssembler(order: Order, assembler: Assembler): void
+    +notifyCourier(order: Order, courier: Courier): void
+    +manageInventory(): void
+    +trackOrderProgress(order: Order): OrderStatus
+    +generateInventoryReport(): String
+    +handleReturns(order: Order): void
+}
+
+class Administrator {
+    +permissions: List<String>
+    +manageUsers(user: User): void
+    +generateReports(): String
+}
+
+User <|-- Client
+User <|-- Assembler
+User <|-- Courier
+PaymentMethod <|-- CardPayment
+PaymentMethod <|-- SBPPayment
+
+Client --> Product : cart
+Client --> Order : orderHistory
+Order --> Product : productList
+Order --> PaymentMethod
+Application --> Product
+Application --> User
+DarkStoreSystem --> Product
+DarkStoreSystem --> Assembler
+DarkStoreSystem --> Courier
+DarkStoreSystem --> Order
+@enduml
