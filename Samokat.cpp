@@ -5,11 +5,9 @@
 
 using namespace std;
 
-// Предварительные объявления
 class Product;
 class Order;
 
-// Абстрактный класс User
 class User {
 protected:
     string id;
@@ -49,7 +47,6 @@ public:
         : productID(id), name(name), price(price), description(desc), stock(stock) {}
 };
 
-// Класс Client наследует User
 class Client : public User {
 private:
     string address;
@@ -93,7 +90,6 @@ public:
     }
 };
 
-// Класс Assembler наследует User
 class Assembler : public User {
 private:
     vector<string> currentOrders;
@@ -116,7 +112,6 @@ public:
     }
 };
 
-// Класс Courier наследует User
 class Courier : public User {
 private:
     string vehicleType;
@@ -143,7 +138,6 @@ public:
     }
 };
 
-// Абстрактный класс PaymentMethod
 class PaymentMethod {
 protected:
     string paymentMethod;
@@ -152,7 +146,6 @@ public:
     virtual ~PaymentMethod() = default;
 };
 
-// Класс CardPayment наследует PaymentMethod
 class CardPayment : public PaymentMethod {
 private:
     string cardNum;
@@ -166,7 +159,6 @@ public:
     }
 };
 
-// Класс SBPPayment наследует PaymentMethod
 class SBPPayment : public PaymentMethod {
 private:
     string phone;
@@ -179,10 +171,8 @@ public:
     }
 };
 
-// Перечисление статусов заказа
 enum STATUS { ASSEMBLY, DELIVERING, COMPLETED, CANCELLED };
 
-// Класс Order
 class Order {
 private:
     string orderID;
@@ -218,7 +208,6 @@ public:
     }
 };
 
-// Класс Application
 class Application {
 public:
     vector<Product> browseProducts() {
@@ -239,7 +228,6 @@ public:
     }
 };
 
-// Класс DarkStoreSystem
 class DarkStoreSystem {
 private:
     map<string, int> inventory;
@@ -254,7 +242,6 @@ public:
     }
 };
 
-// Класс Administrator наследует User
 class Administrator : public User {
 private:
     vector<string> permissions;
@@ -299,4 +286,4 @@ int main() {
     admin.generateReports();
 
     return 0;
-}
+}   
